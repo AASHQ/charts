@@ -1,0 +1,52 @@
+## WordPress Image Version
+## ref: https://hub.docker.com/_/wordpress
+##
+image:
+  repository: wordpress
+  tag: 5.7.2-apache
+  pullPolicy: IfNotPresent
+
+## Table prefix
+##
+wordpressTablePrefix: wp_
+
+replicaCount: 3
+
+database:
+  host:
+
+  ## Gebruikersnaam van WordPress Database
+  user:
+
+  ## Wachtwoord van WordPress Database
+  password: ""
+
+  ## Database naam
+  database: wordpress
+
+  ## Database portnummer
+  port: 3306
+
+serviceType: ClusterIP
+
+healthcheckHttps: true
+
+livenessProbe:
+  initialDelaySeconds: 120
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+readinessProbe:
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+
+ingress:
+  enabled: true
+
+  hosts:
+  - name: testsite.aa.local
+
