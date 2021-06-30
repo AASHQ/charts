@@ -1,0 +1,56 @@
+categories:
+- Blog
+- CMS
+questions:
+- variable: defaultImage
+  default: true
+  description: "Gebruik standaard versie"
+  label: Gebruik standaard versie
+  type: boolean
+  show_subquestion_if: false
+  group: "Wordpress Versie"
+  subquestions:
+  - variable: image.repository
+    default: wordpress
+    description: "WordPress image name"
+    type: string
+    label: WordPress Image Name
+  - variable: image.tag
+    default: "5.7.2-apache"
+    description: "WordPress versie tag"
+    type: string
+    label: Versie tag
+- variable: database.host
+  default: ""
+  description: "Host van database cluster"
+  type: string
+  group: "Database Instellingen"
+- variable: database.user
+  default: ""
+  description: "Gebruikersnaam van Database Gebruiker"
+  type: string
+  group: "Database Instellingen"
+- variable: database.password
+  default: ""
+  description: "Wachtwoord van Database Gebruiker"
+  type: string
+  group: "Database Instellingen"
+- variable: database.database
+  default: ""
+  description: "Naam van bestaande Database"
+  type: string
+  label: Database
+  group: "Database Instellingen"
+- variable: database.port
+  default: "3306"
+  description: "Database portnummer"
+  type: string
+  label: Database port
+  group: "Database Instellingen"
+- variable: ingress.hosts[0].name
+  default: ""
+  description: "Domeinnaam van WordPress installatie"
+  type: hostname
+  required: true
+  label: Domeinnaam
+  group: "Domeinnaam Instellingen"
