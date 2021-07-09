@@ -60,7 +60,7 @@ spec:
           {{- else}}
             port: https
             scheme: HTTPS
-          {{- end}}
+          {{-- end}}
 {{ toYaml .Values.readinessProbe | indent 10 }}
         volumeMounts:
         - name: wordpress-persistent-storage
