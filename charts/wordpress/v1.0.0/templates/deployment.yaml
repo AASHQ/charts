@@ -50,7 +50,7 @@ spec:
           {{- else}}
             port: https
             scheme: HTTPS
-          {{= end}}
+          {{- end}}
 {{ toYaml .Values.livenessProbe | indent 10 }}
         readnessProbe:
           httpGet:
