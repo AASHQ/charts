@@ -7,10 +7,10 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
-  spec:
-    accessModes:
-      - ReadWriteMany
-    resources:
-      requests:
-        storage: {{ .Values.persistence.size | quote }}
-    storageClassName: longhorn
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.persistence.size | quote }}
+  storageClassName: longhorn
