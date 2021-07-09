@@ -16,5 +16,5 @@ spec:
     - name: https
       port: 443
       targetPort: https
-selector:
-  app: {{ template "fullname" . }}
+  selector:
+    app: {{ template "fullname" . }}
