@@ -17,7 +17,7 @@ questions:
     label: WordPress Image Name
   - variable: image.tag
     default: "5.7.2-apache"
-    description: "WordPress versie tag"
+    description: "WordPress versie"
     type: string
     label: Versie tag
 - variable: database.host

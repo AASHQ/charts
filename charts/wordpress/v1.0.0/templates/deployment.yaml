@@ -6,4 +6,68 @@ metadata:
     app: {{ template "fullname" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service "
+    heritage: "{{ .Release.Service }}"
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "fullname" . }}
+      release: "{{ .Release.Name }}"
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}
+        release: "{{ .Release.Name }}"
+    spec:
+      containers:
+      - name: {{ template "fullname" . }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+        env:
+        - name: WORDPRESS_DB_HOST
+          value: {{ .Values.database.host | quote }}
+        - name: WORDPRESS_TABLE_PREFIX
+          value: {{ .Values.wordpressTablePrefix | quote }}
+        - name: WORDPRESS_DB_USER
+          value: {{ .Values.database.user | quote }}
+        - name: WORDPRESS_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ printf "%s-%s" .Release.Name "externaldb" }}
+              key: db-password
+        - name: WORDPRESS_DB_NAME
+          value: {{ .Values.database.database | quote }}
+        ports:
+        - name: http
+          containerPort: 80
+        - name: https
+          containerPort: 443
+        livenessProbe:
+          httpGet:
+            path: /wp-login.php
+          {{- if not .Values.healthcheckHttps }}
+            port: http
+          {{- else}}
+            port: https
+            scheme: HTTPS
+          {{= end}}
+{{ toYaml .Values.livenessProbe | indent 10 }}
+        readnessProbe:
+          httpGet:
+            path: /wp-login.php
+          {{- if not .Values.healthcheckHttps }}
+            port: http
+          {{- else}}
+            port: https
+            scheme: HTTPS
+          {{= end}}
+{{ toYaml .Values.readinessProbe | indent 10 }}
+        volumeMounts:
+        - name: wordpress-persistent-storage
+          mountPath: /var/www/html
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+      volumes:
+      - name: wordpress-persistent-storage
+        persistentVolumeClaim:
+          claimName: {{ template "fullname" . }}

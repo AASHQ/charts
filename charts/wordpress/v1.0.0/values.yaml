@@ -44,6 +44,15 @@ readinessProbe:
   failureThreshold: 6
   successThreshold: 1
 
+persistence:
+  size: 20Gi
+
+resources:
+  requests:
+    memory: 512Mi
+    cpu: 300m
+
+
 ingress:
   enabled: true
 
